@@ -34,6 +34,19 @@ def montecarlo(s,k,r,q,t,sigma,option_type,M):
     data['sT'] = data.apply(lambda x : s * np.exp((r-q-0.5*sigma**2)*t + sigma * np.sqrt(t) * x['epsilon']),axis =1)
     data['option_price'] = data.apply(lambda x: max(x['sT']-k,0) if option_type =='call' else max(k-x['sT'],0), axis = 1)
     return data['option_price'].sum()/M * np.exp(-r*t)
+
+#%%
+# more efficient than above code
+
+def Montecarlo_sim(s,T,r,sigma,sim_num,n_steps):
+    delta_t = T/n_steps
+    z_matrix = np.random.standard_normal(size =(sim_num,n_steps))
+    st_matrix = np.zeros((sim_num,n_steps))
+    st_matrix[:,0] = s0
+    for i in range(n_steps-1):
+        st_matrix[:,i+1] = st_matrix[:,i]*np.exp((r-0.5*sigma**2)*delta_t + sigma*np.sqrt(delta_t)*z_matrix[:,i])
+    
+    return st_matrix
     
     
 def stratifed(s,k,r,q,t,sigma,option_tpye,M):
