@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 #%%
 #page40
-s0 = 100
+s = 100
 k = 105
 T= 1
 r = 0.05
@@ -29,4 +29,4 @@ def Montecarlo_sim(s,T,r,q,sigma,sim_num,n_steps):
     
     return st_matrix
 
-S_matrix = Montecarlo_sim(s0,T,r,sigma,sim_num,n_steps)
+S_matrix = Montecarlo_sim(s,T,r,sigma,sim_num,n_steps)
